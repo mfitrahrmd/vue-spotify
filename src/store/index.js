@@ -14,16 +14,16 @@ export default new Vuex.Store({
     SET_PLAYING_MUSIC(state, payload) {
       state.playingMusic = payload;
     },
-    SET_PLAYING_MUSIC_DURATION(state, payload) {
-      state.playingMusic.duration = payload;
+    SET_PLAYING_INFO(state, payload) {
+      state.playingMusic = { ...state.playingMusic, ...payload };
     },
   },
   actions: {
     setPlayingMusic(context, payload) {
       context.commit("SET_PLAYING_MUSIC", payload);
     },
-    setPlayingMusicDuration(context, payload) {
-      context.commit("SET_PLAYING_MUSIC_DURATION", payload);
+    setPlayingInfo(context, payload) {
+      context.commit("SET_PLAYING_INFO", payload);
     },
   },
   getters: {

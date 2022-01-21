@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <v-btn v-if="$vuetify.theme.dark" class="white" light icon fixed bottom right style="z-index: 999999" @click="$vuetify.theme.dark = false"><v-icon>mdi-weather-sunny</v-icon></v-btn>
+    <v-btn v-else class="black" dark icon fixed bottom right style="z-index: 999999" @click="$vuetify.theme.dark = true"><v-icon>mdi-weather-night</v-icon></v-btn>
+
     <v-app-bar app dark color="rgba(30, 67, 86, 1)">
       <v-app-bar-nav-icon ref="baricon" @click="drawer = true" class="d-sm-none"></v-app-bar-nav-icon>
       <v-toolbar-title>SpoTify</v-toolbar-title>
@@ -56,9 +59,6 @@ export default {
     startMusic(music) {
       this.$refs["music-player"].playMusic(music);
     },
-    getImage(name) {
-      return require(`@/assets/${name}`);
-    },
     loginHandler() {
       window.location = `http://localhost:3000/auth/spotify`;
     },
@@ -72,6 +72,9 @@ export default {
   --userPrimary: var(#1e4356);
   --userPrimaryDark: var(#0d2735);
   --dark: var(#222222);
+}
+a {
+  text-decoration: none;
 }
 
 .whitesmoke--text {

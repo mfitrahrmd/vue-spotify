@@ -1,15 +1,14 @@
 <template>
   <div>
     <FlickingSlider :options="{ align: 'prev' }" :plugins="plugins">
-      <v-col v-for="(item, i) in getPlaylists.items" :key="i" cols="6" lg="2">
+      <v-col v-for="(item, i) in getPlaylists.items" :key="i" cols="4" lg="2">
         <v-card flat>
           <v-img width="100%" v-if="item.images.length" :aspect-ratio="1 / 1" :src="item.images[0].url"></v-img>
           <v-img width="100%" v-else src="https://picsum.photos/200/300" :aspect-ratio="1 / 1"></v-img>
-          <v-card-title class="pa-0"> Name </v-card-title>
-          <v-divider class=""></v-divider>
-          <v-card-text>
-            <p>Mfitrahrmd</p>
-          </v-card-text>
+          <v-card-title class="text-truncate text-no-wrap px-0"> {{ item.name }} </v-card-title>
+          <v-card-subtitle class="text-truncate text-no-wrap px-0">
+            <p>{{ item.owner.display_name }}</p>
+          </v-card-subtitle>
         </v-card>
       </v-col>
     </FlickingSlider>

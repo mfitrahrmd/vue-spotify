@@ -5,27 +5,33 @@
         <v-progress-linear ref="musicProgress" :value="musicTime" class="my-0" :height="hover ? 6 : 3"></v-progress-linear>
         <v-list>
           <v-list-item>
-            <v-list-item-content class="text-truncate">
-              <v-list-item-title>{{ getPlayingMusic.name }}</v-list-item-title>
-              <v-list-item-subtitle>{{
-                getPlayingMusic.artists
-                  .map((v) => {
-                    return v.name;
-                  })
-                  .join("&")
-              }}</v-list-item-subtitle>
+            <v-list-item-content class="text-truncate" :class="{ 'text-decoration-underline': hover }">
+              <v-list-item-title
+                ><a href=""> {{ getPlayingMusic.name }}</a></v-list-item-title
+              >
+              <v-list-item-subtitle>
+                <a href="">
+                  {{
+                    getPlayingMusic.artists
+                      .map((v) => {
+                        return v.name;
+                      })
+                      .join("&")
+                  }}</a
+                ></v-list-item-subtitle
+              >
             </v-list-item-content>
 
             <v-spacer></v-spacer>
 
             <v-list-item-icon :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
-              <v-btn icon>
-                <v-icon>mdi-pause</v-icon>
+              <v-btn icon @click="pauseresumse()">
+                <v-icon>{{ getPlayingMusic.isPaused ? "mdi-play" : "mdi-pause" }}</v-icon>
               </v-btn>
             </v-list-item-icon>
           </v-list-item>
         </v-list>
-        <audio @timeupdate="setMusicTime()" @canplay="canPlay()" :src="getPlayingMusic.url" ref="music"></audio>
+        <audio @timeupdate="setMusicTime()" @canplay="canPlay()" :src="getPlayingMusic.url || ''" ref="music"></audio>
       </v-card>
     </v-hover>
   </div>
@@ -50,18 +56,36 @@ export default {
   methods: {
     ...mapActions({
       setPlayingMusic: "setPlayingMusic",
-      setPlayingMusicDuration: "setPlayingMusicDuration",
+      setPlayingInfo: "setPlayingInfo",
     }),
     setMusicTime() {
-      this.musicTime = (Math.floor(this.$refs.music.currentTime) / this.getPlayingMusic.duration) * 100;
+      this.musicTime = (this.$refs.music.currentTime / this.$refs.music.duration) * 100;
     },
-    playMusic(music) {
-      this.setPlayingMusic(music);
+    async playMusic(music) {
+      await this.setPlayingMusic(music);
     },
     canPlay() {
-      this.setPlayingMusicDuration(30);
       this.$refs.music.play();
+      this.setPlayingInfo({ isPaused: this.$refs.music.paused });
     },
+    pauseresumse() {
+      if (this.$refs.music.paused) {
+        this.$refs.music.play();
+        this.setPlayingInfo({ isPaused: this.$refs.music.paused });
+      } else {
+        this.$refs.music.pause();
+        this.setPlayingInfo({ isPaused: this.$refs.music.paused });
+      }
+    },
+  },
+  created() {
+    console.log(this.$parent.navLinks);
   },
 };
 </script>
+
+<style scoped>
+a {
+  color: inherit !important;
+}
+</style>

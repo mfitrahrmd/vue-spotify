@@ -7,7 +7,7 @@
             <th class="text-left"></th>
             <th class="text-left"></th>
             <th class="text-left">Title</th>
-            <th class="text-left">Album</th>
+            <th class="text-left" v-if="$vuetify.breakpoint.mdAndUp">Album</th>
           </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
                 "
               ></p>
             </td>
-            <td v-text="item.track.album.name"></td>
+            <td v-if="$vuetify.breakpoint.mdAndUp" v-text="item.track.album.name"></td>
           </tr>
         </tbody>
       </template>
