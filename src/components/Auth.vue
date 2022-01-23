@@ -12,7 +12,7 @@ export default {
       SET_TOKEN: "SET_TOKEN",
     }),
     ...mapActions("users", {
-      getUserProfile: "getUserProfile",
+      fetchUserProfile: "fetchUserProfile",
     }),
   },
   created() {
@@ -27,7 +27,8 @@ export default {
           };
         }, {});
       this.SET_TOKEN(data);
-      this.getUserProfile();
+      localStorage.setItem("access_token", data.access_token);
+      this.fetchUserProfile();
     }
     this.$router.push("/");
   },

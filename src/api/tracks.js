@@ -1,10 +1,13 @@
 import API from "./index";
 
 export default {
-  getUserProfile() {
+  getUserSavedTracks() {
     return API({
-      url: "/me",
+      url: "/me/tracks",
       method: "GET",
+      params: {
+        limit: 50,
+      },
     });
   },
 };

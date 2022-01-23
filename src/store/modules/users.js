@@ -1,4 +1,4 @@
-import API from "@/api";
+import apiUsers from "@/api/users";
 
 export default {
   namespaced: true,
@@ -11,10 +11,11 @@ export default {
     },
   },
   actions: {
-    getUserProfile() {
-      API.getUserProfile()
+    fetchUserProfile({ commit }) {
+      apiUsers
+        .getUserProfile()
         .then((v) => {
-          console.log(v);
+          commit("SET_USER_PROFILE", v.data);
         })
         .catch((err) => {
           console.log(err);

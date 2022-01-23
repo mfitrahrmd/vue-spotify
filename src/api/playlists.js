@@ -1,10 +1,13 @@
 import API from "./index";
 
 export default {
-  getUserProfile() {
+  getUserPlaylists() {
     return API({
-      url: "/me",
+      url: "/me/playlists",
       method: "GET",
+      params: {
+        limit: 50,
+      },
     });
   },
 };

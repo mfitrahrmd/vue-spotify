@@ -27,7 +27,6 @@ import CollectionsTracks from "@/components/CollectionsTracks.vue";
 import CollectionsPlaylists from "@/components/CollectionsPlaylists.vue";
 import CollectionsArtists from "@/components/CollectionsArtists.vue";
 
-import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -39,26 +38,13 @@ export default {
     CollectionsPlaylists,
     CollectionsArtists,
   },
-  computed: {
-    ...mapGetters("collections", {
-      getSavedTracks: "getSavedTracks",
-      getSavedAlbums: "getSavedAlbums",
-      getSavedShows: "getSavedShows",
-      getSavedEpisodes: "getSavedEpisodes",
-      getFollowedArtists: "getFollowedArtists",
-    }),
-  },
+  computed: {},
   methods: {
-    ...mapActions({
-      fetchCollections: "collections/fetchCollections",
-    }),
     startMusic(music) {
       this.$emit("start-music", music);
     },
   },
-  created() {
-    this.fetchCollections();
-  },
+  created() {},
 };
 </script>
 

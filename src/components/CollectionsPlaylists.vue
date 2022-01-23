@@ -1,7 +1,7 @@
 <template>
   <div>
     <FlickingSlider :options="{ align: 'prev' }" :plugins="plugins">
-      <v-col v-for="(item, i) in getPlaylists.items" :key="i" cols="4" lg="2">
+      <v-col v-for="(item, i) in getUserPlaylists.items" :key="i" cols="4" lg="2">
         <v-card flat>
           <v-img width="100%" v-if="item.images.length" :aspect-ratio="1 / 1" :src="item.images[0].url"></v-img>
           <v-img width="100%" v-else src="https://picsum.photos/200/300" :aspect-ratio="1 / 1"></v-img>
@@ -18,7 +18,7 @@
 <script>
 import FlickingSlider from "@/components/FlickingSlider.vue";
 
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 import { Arrow } from "@egjs/flicking-plugins";
 export default {
@@ -31,9 +31,17 @@ export default {
     FlickingSlider,
   },
   computed: {
-    ...mapGetters("collections", {
-      getPlaylists: "getPlaylists",
+    ...mapGetters("playlists", {
+      getUserPlaylists: "getUserPlaylists",
     }),
+  },
+  methods: {
+    ...mapActions("playlists", {
+      fetchUserPlaylists: "fetchUserPlaylists",
+    }),
+  },
+  created() {
+    this.fetchUserPlaylists();
   },
 };
 </script>

@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr :class="{ 'no-preview': !item.track.preview_url }" v-for="(item, i) in getSavedTracks.items" :key="i" @dblclick="$emit('start-music', { url: item.track.preview_url, name: item.track.name, artists: item.track.artists })">
+          <tr :class="{ 'no-preview': !item.track.preview_url }" v-for="(item, i) in getUserSavedTracks.items" :key="i" @dblclick="$emit('start-music', { url: item.track.preview_url, name: item.track.name, artists: item.track.artists })">
             <td v-text="i + 1" class="" style="width: 5px"></td>
             <td class="pa-0 ma-0"><v-img width="50px" class="my-1" :src="item.track.album.images[0].url" :aspect-ratio="1 / 1"></v-img></td>
             <td>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -44,9 +44,17 @@ export default {
   },
   components: {},
   computed: {
-    ...mapGetters("collections", {
-      getSavedTracks: "getSavedTracks",
+    ...mapGetters("tracks", {
+      getUserSavedTracks: "getUserSavedTracks",
     }),
+  },
+  methods: {
+    ...mapActions("tracks", {
+      fetchUserSavedTracks: "fetchUserSavedTracks",
+    }),
+  },
+  created() {
+    this.fetchUserSavedTracks();
   },
 };
 </script>

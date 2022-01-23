@@ -2,7 +2,7 @@
   <div>
     <v-sheet class="mx-auto">
       <v-slide-group show-arrows>
-        <v-slide-item v-for="(item, i) in getFollowedArtists.artists.items" :key="i" class="mx-1 mx-lg-3">
+        <v-slide-item v-for="(item, i) in getUserFollowedArtists.artists.items" :key="i" class="mx-1 mx-lg-3">
           <v-card flat :width="$vuetify.breakpoint.smAndDown ? 150 : 250">
             <v-img :aspect-ratio="1 / 1" :src="item.images[0].url" style="border-radius: 50%"></v-img>
             <v-card-title :title="item.name" class="text-truncate text-no-wrap"> {{ item.name }} </v-card-title>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -23,9 +23,17 @@ export default {
   },
   components: {},
   computed: {
-    ...mapGetters("collections", {
-      getFollowedArtists: "getFollowedArtists",
+    ...mapGetters("artists", {
+      getUserFollowedArtists: "getUserFollowedArtists",
     }),
+  },
+  methods: {
+    ...mapActions("artists", {
+      fetchUserFollowedArtists: "fetchUserFollowedArtists",
+    }),
+  },
+  created() {
+    this.fetchUserFollowedArtists();
   },
 };
 </script>

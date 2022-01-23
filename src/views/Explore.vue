@@ -91,7 +91,7 @@
 
       <h1>Recently Played</h1>
       <FlickingSlider :plugins="recentlyPlayed">
-        <v-hover v-slot="{ hover }" v-for="(item, i) in getRecentlyPlayed.items" :key="i">
+        <v-hover v-slot="{ hover }" v-for="(item, i) in getUserRecentlyPlayedTracks.items" :key="i">
           <v-col cols="8" lg="4">
             <v-card :class="{ 'bg-primary': hover }" :dark="hover">
               <div class="d-flex flex-no-wrap justify-space-between">
@@ -146,19 +146,23 @@ export default {
     FlickingSlider,
   },
   computed: {
-    ...mapGetters("explore", {
-      getNewReleases: "getNewReleases",
-      getFeaturedPlaylists: "getFeaturedPlaylists",
-      getRecentlyPlayed: "getRecentlyPlayed",
+    ...mapGetters({
+      getUserRecentlyPlayedTracks: "player/getUserRecentlyPlayedTracks",
+      getNewReleases: "browse/getNewReleases",
+      getFeaturedPlaylists: "browse/getFeaturedPlaylists",
     }),
   },
   methods: {
     ...mapActions({
-      fetchExplore: "explore/fetchExplore",
+      fetchUserRecentlyPlayedTracks: "player/fetchUserRecentlyPlayedTracks",
+      fetchNewReleases: "browse/fetchNewReleases",
+      fetchFeaturedPlaylists: "browse/fetchFeaturedPlaylists",
     }),
   },
   async created() {
-    await this.fetchExplore();
+    await this.fetchUserRecentlyPlayedTracks();
+    await this.fetchNewReleases();
+    await this.fetchFeaturedPlaylists();
   },
 };
 </script>

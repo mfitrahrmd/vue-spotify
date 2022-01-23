@@ -3,8 +3,11 @@ import Vuex from "vuex";
 
 import auth from "./modules/auth";
 import users from "./modules/users";
-import collections from "./modules/collections";
-import explore from "./modules/explore";
+import tracks from "./modules/tracks";
+import playlists from "./modules/playlists";
+import artists from "./modules/artists";
+import player from "./modules/player";
+import browse from "./modules/browse";
 
 Vue.use(Vuex);
 
@@ -34,7 +37,10 @@ export default new Vuex.Store({
   modules: {
     auth,
     users,
-    collections,
-    explore,
+    tracks,
+    playlists,
+    artists,
+    player,
+    browse,
   },
 });

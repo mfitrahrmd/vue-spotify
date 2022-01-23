@@ -78,9 +78,7 @@ export default {
       }
     },
   },
-  created() {
-    console.log(this.$parent.navLinks);
-  },
+  created() {},
 };
 </script>
 
