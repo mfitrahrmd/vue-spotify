@@ -20,6 +20,11 @@ const routes = [
     name: "Collections",
     component: () => import("../views/Collections.vue"),
   },
+  {
+    path: "/auth",
+    name: "Auth",
+    component: () => import("@/components/Auth.vue"),
+  },
 ];
 
 const router = new VueRouter({

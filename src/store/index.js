@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+import auth from "./modules/auth";
+import users from "./modules/users";
 import collections from "./modules/collections";
 import explore from "./modules/explore";
 
@@ -30,6 +32,8 @@ export default new Vuex.Store({
     getPlayingMusic: (state) => state.playingMusic,
   },
   modules: {
+    auth,
+    users,
     collections,
     explore,
   },

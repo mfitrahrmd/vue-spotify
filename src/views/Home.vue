@@ -26,7 +26,7 @@
             <div class="">
               <div class="text-h3 mb-6">Designing websites / apps for companies like <span>Google.|</span></div>
               <div class="font-italic mb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed expedita error veritatis non veniam officia beatae earum molestiae! Ducimus id dicta odio eius minima quia.</div>
-              <v-btn class="text-lowercase pa-5 mb-1" color="#0d2735" rounded dark>tgcfitrah26@gmail.com</v-btn>
+              <v-btn @click="call()" class="text-lowercase pa-5 mb-1" color="#0d2735" rounded dark>tgcfitrah26@gmail.com</v-btn>
               <div class="text-body-2">Available for freelance.</div>
             </div>
           </v-col>
@@ -48,7 +48,9 @@ export default {
       },
     };
   },
-  methods: {},
+  methods: {
+    call() {},
+  },
   created() {},
 };
 </script>
