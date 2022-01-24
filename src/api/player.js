@@ -1,10 +1,8 @@
-import API from "./index";
+import axiosInstance from "@/api";
 
-export default {
-  async getUserRecentlyPlayedTracks() {
-    return await API({
-      url: "/me/player/recently-played",
-      method: "GET",
-    });
-  },
-};
+export async function getUserRecentlyPlayedTracks() {
+  return await axiosInstance({
+    url: "/me/player/recently-played",
+    method: "GET",
+  });
+}

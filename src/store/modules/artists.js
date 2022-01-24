@@ -1,4 +1,4 @@
-import apiArtists from "@/api/artists";
+import { getUserFollowedArtists } from "@/api/artists";
 
 export default {
   namespaced: true,
@@ -12,9 +12,13 @@ export default {
   },
   actions: {
     fetchUserFollowedArtists({ commit }) {
-      apiArtists.getUserFollowedArtists().then((v) => {
-        commit("SET_USER_FOLLOWED_ARTISTS", v.data);
-      });
+      getUserFollowedArtists()
+        .then((v) => {
+          commit("SET_USER_FOLLOWED_ARTISTS", v.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   getters: {

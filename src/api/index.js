@@ -1,18 +1,16 @@
 import axios from "axios";
-
-// Uncomment below if you want to store access_token in memory instead of localStorage
 // import store from "@/store";
-// API.interceptors.request.use(function (config) {
-//   config.headers.common["Authorization"] = `Bearer ${store.getters["auth/getAccessToken"]}`;
-//   return config;
-// });
 
-const API = axios.create({
+const axiosInstance = axios.create({
   baseURL: "https://api.spotify.com/v1",
-  headers: {
-    Authorization: `Bearer ${localStorage.access_token}`,
-  },
-  withCredentials: true,
+  // headers: {
+  //   Authorization: `Bearer ${localStorage.access_token}`,
+  // },
 });
 
-export default API;
+axiosInstance.interceptors.request.use(function (config) {
+  config.headers.common["Authorization"] = `Bearer ${localStorage.access_token}`;
+  return config;
+});
+
+export default axiosInstance;

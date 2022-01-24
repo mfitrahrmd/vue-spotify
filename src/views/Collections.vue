@@ -7,17 +7,19 @@
         <v-tab href="#tab-playlists"> Playlists </v-tab>
         <v-tab href="#tab-artists"> Artists </v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tab" touchless>
-        <v-tab-item value="tab-tracks">
-          <CollectionsTracks @start-music="startMusic" />
-        </v-tab-item>
-        <v-tab-item value="tab-playlists">
-          <CollectionsPlaylists />
-        </v-tab-item>
-        <v-tab-item value="tab-artists">
-          <CollectionsArtists />
-        </v-tab-item>
-      </v-tabs-items>
+      <keep-alive>
+        <v-tabs-items v-model="tab" touchless>
+          <v-tab-item value="tab-tracks">
+            <CollectionsTracks @start-music="startMusic" />
+          </v-tab-item>
+          <v-tab-item value="tab-playlists">
+            <CollectionsPlaylists />
+          </v-tab-item>
+          <v-tab-item value="tab-artists">
+            <CollectionsArtists />
+          </v-tab-item>
+        </v-tabs-items>
+      </keep-alive>
     </v-card>
   </div>
 </template>

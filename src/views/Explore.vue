@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 2000px">
+  <div>
     <v-container>
       <v-container fluid>
         <v-row>
@@ -90,9 +90,9 @@
       </FlickingSlider>
 
       <h1>Recently Played</h1>
-      <FlickingSlider :plugins="recentlyPlayed">
+      <FlickingSlider v-bind="{ options: { align: 'prev' } }" :plugins="recentlyPlayed">
         <v-hover v-slot="{ hover }" v-for="(item, i) in getUserRecentlyPlayedTracks.items" :key="i">
-          <v-col cols="8" lg="4">
+          <v-col cols="12" lg="4">
             <v-card :class="{ 'bg-primary': hover }" :dark="hover">
               <div class="d-flex flex-no-wrap justify-space-between">
                 <div class="text-truncate" style="width: 100%">
@@ -106,7 +106,7 @@
                   }}</v-card-subtitle>
                   <v-divider></v-divider>
                   <v-card-actions>
-                    <v-btn title="Like this track" x-small depressed fab><v-icon>mdi-heart-outline</v-icon></v-btn>
+                    <v-btn @click="like(item.track, fetchUserRecentlyPlayedTracks())" title="Like this track" x-small depressed fab><v-icon :color="item.track.is_liked ? 'pink accent-3' : 'grey'">mdi-heart</v-icon></v-btn>
                     <v-btn title="Share" x-small depressed fab><v-icon>mdi-share-variant-outline</v-icon></v-btn>
                     <v-btn v-if="item.track.preview_url" @click="$emit('start-music', { url: item.track.preview_url, name: item.track.name, artists: item.track.artists })" title="Play Example" x-small depressed fab
                       ><v-icon>mdi-play</v-icon></v-btn
@@ -134,6 +134,8 @@ import { mapGetters, mapActions } from "vuex";
 
 import FlickingSlider from "@/components/FlickingSlider.vue";
 
+import TracksMixin from "@/mixins/TracksMixin";
+
 export default {
   data() {
     return {
@@ -145,6 +147,7 @@ export default {
   components: {
     FlickingSlider,
   },
+  mixins: [TracksMixin],
   computed: {
     ...mapGetters({
       getUserRecentlyPlayedTracks: "player/getUserRecentlyPlayedTracks",

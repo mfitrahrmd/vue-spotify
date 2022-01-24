@@ -1,16 +1,15 @@
-import API from "./index";
+import axiosInstance from "@/api";
 
-export default {
-  async getNewReleases() {
-    return await API({
-      url: "/browse/new-releases",
-      method: "GET",
-    });
-  },
-  async getFeaturedPlaylists() {
-    return await API({
-      url: "/browse/featured-playlists",
-      method: "GET",
-    });
-  },
-};
+export async function getNewReleases() {
+  return await axiosInstance({
+    url: "/browse/new-releases",
+    method: "GET",
+  });
+}
+
+export async function getFeaturedPlaylists() {
+  return await axiosInstance({
+    url: "/browse/featured-playlists",
+    method: "GET",
+  });
+}

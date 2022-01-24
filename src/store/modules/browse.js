@@ -1,4 +1,4 @@
-import apiBrowse from "@/api/browse";
+import { getNewReleases, getFeaturedPlaylists } from "@/api/browse";
 
 export default {
   namespaced: true,
@@ -16,14 +16,22 @@ export default {
   },
   actions: {
     async fetchNewReleases({ commit }) {
-      await apiBrowse.getNewReleases().then((v) => {
-        commit("SET_NEW_RELEASES", v.data);
-      });
+      await getNewReleases()
+        .then((v) => {
+          commit("SET_NEW_RELEASES", v.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     async fetchFeaturedPlaylists({ commit }) {
-      await apiBrowse.getFeaturedPlaylists().then((v) => {
-        commit("SET_FEATURED_PLAYLISTS", v.data);
-      });
+      await getFeaturedPlaylists()
+        .then((v) => {
+          commit("SET_FEATURED_PLAYLISTS", v.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   getters: {

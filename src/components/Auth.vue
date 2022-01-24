@@ -2,7 +2,7 @@
   <div></div>
 </template>
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {};
@@ -10,9 +10,6 @@ export default {
   methods: {
     ...mapMutations("auth", {
       SET_TOKEN: "SET_TOKEN",
-    }),
-    ...mapActions("users", {
-      fetchUserProfile: "fetchUserProfile",
     }),
   },
   created() {
@@ -28,7 +25,6 @@ export default {
         }, {});
       this.SET_TOKEN(data);
       localStorage.setItem("access_token", data.access_token);
-      this.fetchUserProfile();
     }
     this.$router.push("/");
   },

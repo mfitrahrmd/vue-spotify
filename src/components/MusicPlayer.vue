@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-16 pt-16">
     <v-hover v-if="getPlayingMusic" v-slot="{ hover }">
       <v-card ref="musicPlayer" id="musicPlayer" :class="{ musicPlayerMobile: $vuetify.breakpoint.mdAndDown }" tile style="position: fixed; bottom: 0; width: 100%; z-index: 100">
         <v-progress-linear ref="musicProgress" :value="musicTime" class="my-0" :height="hover ? 6 : 3"></v-progress-linear>

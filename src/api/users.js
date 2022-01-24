@@ -1,10 +1,8 @@
-import API from "./index";
+import axiosInstance from "@/api";
 
-export default {
-  getUserProfile() {
-    return API({
-      url: "/me",
-      method: "GET",
-    });
-  },
-};
+export async function getUserProfile() {
+  return await axiosInstance({
+    url: "/me",
+    method: "GET",
+  });
+}

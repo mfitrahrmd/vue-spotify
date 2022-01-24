@@ -1,4 +1,4 @@
-import apiPlaylists from "@/api/playlists";
+import { getUserPlaylists } from "@/api/playlists";
 
 export default {
   namespaced: true,
@@ -12,9 +12,13 @@ export default {
   },
   actions: {
     fetchUserPlaylists({ commit }) {
-      apiPlaylists.getUserPlaylists().then((v) => {
-        commit("SET_USER_PLAYLISTS", v.data);
-      });
+      getUserPlaylists()
+        .then((v) => {
+          commit("SET_USER_PLAYLISTS", v.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   getters: {

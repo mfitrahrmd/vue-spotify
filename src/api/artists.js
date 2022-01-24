@@ -1,14 +1,12 @@
-import API from "./index";
+import axiosInstance from "@/api";
 
-export default {
-  getUserFollowedArtists() {
-    return API({
-      url: "/me/following",
-      method: "GET",
-      params: {
-        limit: 50,
-        type: "artist",
-      },
-    });
-  },
-};
+export async function getUserFollowedArtists() {
+  return await axiosInstance({
+    url: "/me/following",
+    method: "GET",
+    params: {
+      limit: 50,
+      type: "artist",
+    },
+  });
+}

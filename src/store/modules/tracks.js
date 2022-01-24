@@ -1,4 +1,4 @@
-import apiTracks from "@/api/tracks";
+import { getUserSavedTracks } from "@/api/tracks";
 
 export default {
   namespaced: true,
@@ -12,9 +12,13 @@ export default {
   },
   actions: {
     fetchUserSavedTracks({ commit }) {
-      apiTracks.getUserSavedTracks().then((v) => {
-        commit("SET_USER_SAVED_TRACKS", v.data);
-      });
+      getUserSavedTracks()
+        .then((v) => {
+          commit("SET_USER_SAVED_TRACKS", v.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   getters: {

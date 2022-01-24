@@ -1,4 +1,6 @@
-import apiPlayer from "@/api/player";
+import { getUserRecentlyPlayedTracks } from "@/api/player";
+import { checkUserSavedTracks } from "@/api/tracks";
+import { mapPlaylistTracksId, mapPlaylistLikedTracks } from "@/utils/MapPlaylist";
 
 export default {
   namespaced: true,
@@ -10,9 +12,17 @@ export default {
   },
   actions: {
     async fetchUserRecentlyPlayedTracks({ commit }) {
-      await apiPlayer.getUserRecentlyPlayedTracks().then((v) => {
-        commit("SET_USER_RECENTLY_PLAYED_TRACKS", v.data);
-      });
+      await getUserRecentlyPlayedTracks()
+        .then((v) => {
+          const ids = mapPlaylistTracksId(v.data.items);
+          checkUserSavedTracks(ids).then((w) => {
+            mapPlaylistLikedTracks(v.data.items, w.data);
+            commit("SET_USER_RECENTLY_PLAYED_TRACKS", v.data);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   getters: {
