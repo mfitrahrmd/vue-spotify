@@ -65,26 +65,28 @@
       <FlickingSlider :options="{ align: 'prev' }" :plugins="featuredPlaylists">
         <v-hover v-slot="{ hover }" v-for="(item, i) in getFeaturedPlaylists.playlists.items" :key="i">
           <v-col cols="8" lg="2" :class="{ 'text-decoration-underline': hover }">
-            <v-card flat>
-              <v-menu rounded="lg" bottom right>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn style="z-index: 100000" dark absolute icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
+            <v-menu rounded="lg" bottom right>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon dark absolute v-bind="attrs" v-on="on" style="z-index: 80">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
 
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title><a :href="item.external_urls.spotify" target="blank">Open in Spotify</a></v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-              <v-img :class="{ 'img-overlay': hover }" :aspect-ratio="1 / 1" :src="item.images[0].url"></v-img>
-              <v-card-text class="pa-0">
-                <h3 class="text-truncate" :title="item.name">{{ item.name }}</h3>
-                <p class="text-truncate" :title="item.description" v-html="item.description"></p>
-              </v-card-text>
-            </v-card>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-title><a :href="item.external_urls.spotify" target="blank">Open in Spotify</a></v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <router-link :to="'/playlists/' + item.id">
+              <v-card flat>
+                <v-img :class="{ 'img-overlay': hover }" :aspect-ratio="1 / 1" :src="item.images[0].url"></v-img>
+                <v-card-text class="pa-0">
+                  <h3 class="text-truncate" :title="item.name">{{ item.name }}</h3>
+                  <p class="text-truncate" :title="item.description" v-html="item.description"></p>
+                </v-card-text>
+              </v-card>
+            </router-link>
           </v-col>
         </v-hover>
       </FlickingSlider>

@@ -5,12 +5,13 @@ export default {
     like: function (p, callback) {
       // check if the track is liked or not
       if (p.is_liked) {
-        removeUserSavedTracks(p.id);
+        removeUserSavedTracks(p.id).then(() => {
+          callback();
+        });
       } else {
-        addUserSavedTracks(p.id);
-      }
-      if (callback) {
-        callback;
+        addUserSavedTracks(p.id).then(() => {
+          callback();
+        });
       }
     },
   },

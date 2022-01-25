@@ -8,19 +8,15 @@
               <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
             </template>
             <div style="position: relative">
-              <v-img class="bg-blur" :src="playlist.images[0].url"></v-img>
+              <v-img class="bg-blur" :class="{ 'd-none': !$vuetify.breakpoint.mdAndDown }" :src="playlist.images[0].url"></v-img>
               <v-img :class="{ 'mx-auto': $vuetify.breakpoint.mdAndDown }" :width="$vuetify.breakpoint.mdAndDown ? '50%' : ''" :src="playlist.images[0].url"></v-img>
             </div>
 
             <div :class="$vuetify.breakpoint.mdAndDown ? ['d-flex', 'flex-column', 'align-center', 'text-center'] : ''">
-              <v-card-title class="display-2 font-weight-medium" style="position: relative">
-                <div>{{ playlist.name }}</div>
-              </v-card-title>
+              <div class="display-2 mx-5 text-truncate">{{ playlist.name }}</div>
 
-              <v-card-subtitle>
-                <div>By {{ playlist.owner.display_name }}</div>
-                <div class="my-3">{{ playlist.tracks.total }} Tracks</div>
-              </v-card-subtitle>
+              <div class="subtitle-1 mx-5 text-truncate">By {{ playlist.owner.display_name }}</div>
+              <div class="title mx-5 mt-5 text-truncate">{{ playlist.tracks.total }} Tracks</div>
 
               <v-divider class="mx-4"></v-divider>
 
@@ -30,50 +26,18 @@
         </v-col>
 
         <v-col lg="8">
-          <v-simple-table fixed-header :height="!$vuetify.breakpoint.mdAndDown ? '75vh' : ''">
-            <template v-slot:default>
-              <thead>
-                <tr v-if="!$vuetify.breakpoint.mdAndDown">
-                  <th class="text-left"></th>
-                  <th class="text-left">Title</th>
-                  <th class="text-left">Album</th>
-                  <th class="text-left"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, i) in getPlaylistTracks.items" :key="i">
-                  <td>
-                    <v-avatar tile>
-                      <v-img gradient="to top right, rgba(255,255,255,0), rgba(0,0,0,.4)" :src="item.track.album.images[2].url"></v-img>
-                      <v-btn absolute icon title="Play Example" @click="$emit('start-music', { url: item.track.preview_url, name: item.track.name, artists: item.track.artists })">
-                        <v-icon>mdi-play</v-icon>
-                      </v-btn>
-                    </v-avatar>
-                  </td>
-                  <td>
-                    <p class="my-1">{{ item.track.name }}</p>
-                    <p class="my-1 font-weight-medium">
-                      {{
-                        item.track.artists
-                          .map((v) => {
-                            return v.name;
-                          })
-                          .join("&")
-                      }}
-                    </p>
-                  </td>
-                  <td v-if="!$vuetify.breakpoint.mdAndDown">
-                    <p>{{ item.track.album.name }}</p>
-                  </td>
-                  <td>
-                    <v-btn icon @click="like(item.track, fetchPlaylist())" :title="item.track.is_liked ? 'Remove from liked' : 'Like this track'">
-                      <v-icon :color="item.track.is_liked ? 'pink accent-3' : ''">mdi-heart</v-icon>
-                    </v-btn>
-                  </td>
-                </tr>
-              </tbody>
+          <TrackList :tracks="getPlaylistTracks.items">
+            <template v-slot:btnPlay="{ musicData }">
+              <v-btn absolute icon title="Play Example" @click="$emit('start-music', musicData)">
+                <v-icon>mdi-play</v-icon>
+              </v-btn>
             </template>
-          </v-simple-table>
+            <template v-slot:btnLike="{ musicData }">
+              <v-btn icon @click="like(musicData, fetchPlaylist)" :title="musicData.is_liked ? 'Remove from liked' : 'Like this track'">
+                <v-icon :color="musicData.is_liked ? 'pink accent-3' : ''">mdi-heart</v-icon>
+              </v-btn>
+            </template>
+          </TrackList>
         </v-col>
       </v-row>
     </v-container>
@@ -83,14 +47,22 @@
 <script>
 import { getPlaylist } from "@/api/playlists";
 import { checkUserSavedTracks } from "@/api/tracks";
+
+import TrackList from "@/components/TrackList";
+
 import TracksMixin from "@/mixins/TracksMixin";
+
 import { mapPlaylistTracksId, mapPlaylistLikedTracks } from "@/utils/MapPlaylist";
+
 export default {
   data() {
     return {
       playlistId: this.$route.params.id, // Get playlist id from url
       playlist: "",
     };
+  },
+  components: {
+    TrackList,
   },
   mixins: [TracksMixin],
   computed: {

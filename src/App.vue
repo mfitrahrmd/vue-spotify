@@ -61,7 +61,7 @@ export default {
       this.$refs["music-player"].playMusic(music);
     },
     loginHandler() {
-      window.location = `https://accounts.spotify.com/authorize?response_type=token&redirect_uri=http%3A%2F%2F192.168.139.6%3A8080%2Fauth&scope=user-read-private%20user-library-read%20user-library-modify%20playlist-read-private%20user-read-recently-played%20user-read-playback-position%20user-follow-read&client_id=7f7858ab81324701ada54b47514fa0a6`;
+      window.location = `https://accounts.spotify.com/authorize?response_type=token&redirect_uri=http%3A%2F%2F192.168.64.6%3A8080%2Fauth&scope=user-read-private%20user-library-read%20user-library-modify%20playlist-read-private%20user-read-recently-played%20user-read-playback-position%20user-follow-read&client_id=7f7858ab81324701ada54b47514fa0a6`;
     },
   },
   computed: {},

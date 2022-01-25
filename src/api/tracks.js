@@ -1,5 +1,12 @@
 import axiosInstance from "@/api";
 
+export async function getTrack(trackId) {
+  return await axiosInstance({
+    url: "/tracks/" + trackId,
+    method: "GET",
+  });
+}
+
 export async function getUserSavedTracks() {
   return await axiosInstance({
     url: "/me/tracks",
@@ -37,5 +44,12 @@ export async function checkUserSavedTracks(trackId) {
     params: {
       ids: trackId,
     },
+  });
+}
+
+export async function getTrackAudioFeatures(trackId) {
+  return await axiosInstance({
+    url: "/audio-features/" + trackId,
+    method: "GET",
   });
 }

@@ -29,6 +29,10 @@ const routes = [
     path: "/playlists/:id",
     component: () => import("@/components/Playlists.vue"),
   },
+  {
+    path: "/tracks/:id",
+    component: () => import("@/components/Tracks.vue"),
+  },
 ];
 
 const router = new VueRouter({
