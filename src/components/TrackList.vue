@@ -6,7 +6,7 @@
           <tr v-if="!$vuetify.breakpoint.mdAndDown">
             <th class="text-left"></th>
             <th class="text-left">Title</th>
-            <th class="text-left">Album</th>
+            <th class="text-left" v-if="tracks[0].album">Album</th>
             <th class="text-left"></th>
           </tr>
         </thead>
@@ -14,40 +14,34 @@
           <tr v-for="(item, i) in tracks" :key="i">
             <td>
               <v-avatar tile>
-                <v-img gradient="to top right, rgba(255,255,255,0), rgba(0,0,0,.4)" :src="item.track.album.images[2].url"></v-img>
-                <slot name="btnPlay" :musicData="{ url: item.track.preview_url, name: item.track.name, artists: item.track.artists }"></slot>
+                <v-img v-if="item.album" gradient="to top right, rgba(255,255,255,0), rgba(0,0,0,.4)" :src="item.album.images[2].url"></v-img>
+                <slot v-if="item.preview_url" name="btnPlay" :musicData="item"></slot>
               </v-avatar>
             </td>
             <td>
               <v-hover v-slot="{ hover }">
-                <router-link style="color: inherit" :to="'/tracks/' + item.track.id">
-                  <p class="d-inline" :class="{ 'text-decoration-underline': hover }">{{ item.track.name }}</p>
+                <router-link style="color: inherit" :to="'/tracks/' + item.id">
+                  <p class="d-inline" :class="{ 'text-decoration-underline': hover }">{{ item.name }}</p>
                 </router-link>
               </v-hover>
               <v-spacer></v-spacer>
-              <v-hover v-slot="{ hover }">
-                <router-link style="color: inherit" :to="'/artists/' + item.track.id">
+              <v-hover v-slot="{ hover }" v-for="artist in item.artists" :key="artist.id">
+                <router-link style="color: inherit" :to="'/artists/' + artist.id">
                   <p class="d-inline font-weight-medium" :class="{ 'text-decoration-underline': hover }">
-                    {{
-                      item.track.artists
-                        .map((v) => {
-                          return v.name;
-                        })
-                        .join("&")
-                    }}
+                    {{ artist.name }}
                   </p>
                 </router-link>
               </v-hover>
             </td>
-            <td v-if="!$vuetify.breakpoint.mdAndDown">
+            <td v-if="item.album && !$vuetify.breakpoint.mdAndDown">
               <v-hover v-slot="{ hover }">
-                <router-link style="color: inherit" :to="'/albums/' + item.track.id">
-                  <p class="d-inline" :class="{ 'text-decoration-underline': hover }">{{ item.track.album.name }}</p>
+                <router-link style="color: inherit" :to="'/albums/' + item.album.id">
+                  <p class="d-inline" :class="{ 'text-decoration-underline': hover }">{{ item.album.name }}</p>
                 </router-link>
               </v-hover>
             </td>
-            <td>
-              <slot name="btnLike" :musicData="{ id: item.track.id, is_liked: item.track.is_liked }"></slot>
+            <td class="text-end">
+              <slot name="btnLike" :musicData="item"></slot>
             </td>
           </tr>
         </tbody>

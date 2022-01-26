@@ -1,10 +1,9 @@
 <template>
   <div>
     <v-container style="position: relative">
-      <v-btn fab absolute right color="rgba(30, 67, 86, 1)" title="Play Example"><v-icon>mdi-play</v-icon></v-btn>
       <v-row>
         <v-col cols="12" lg="3">
-          <v-img width="50%" class="mx-auto" :aspect-ratio="1 / 1" :src="track.album.images[0].url"></v-img>
+          <v-img :width="$vuetify.breakpoint.mdAndDown ? '50%' : '100%'" class="mx-auto" :aspect-ratio="1 / 1" :src="track.album.images[0].url"></v-img>
         </v-col>
         <v-col cols="12" lg="9">
           <div class="display-3 font-weight-medium text-truncate">{{ track.name }}</div>
@@ -70,8 +69,8 @@ export default {
       });
     },
   },
-  created() {
-    this.fetchTrack();
+  async created() {
+    await this.fetchTrack();
   },
 };
 </script>

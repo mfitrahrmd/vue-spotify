@@ -4,9 +4,6 @@
       <v-row>
         <v-col lg="4">
           <v-card :loading="false" class="mx-auto" :flat="$vuetify.breakpoint.mdAndDown">
-            <template slot="progress">
-              <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
-            </template>
             <div style="position: relative">
               <v-img class="bg-blur" :class="{ 'd-none': !$vuetify.breakpoint.mdAndDown }" :src="playlist.images[0].url"></v-img>
               <v-img :class="{ 'mx-auto': $vuetify.breakpoint.mdAndDown }" :width="$vuetify.breakpoint.mdAndDown ? '50%' : ''" :src="playlist.images[0].url"></v-img>
@@ -26,7 +23,7 @@
         </v-col>
 
         <v-col lg="8">
-          <TrackList :tracks="getPlaylistTracks.items">
+          <TrackList :tracks="tracks">
             <template v-slot:btnPlay="{ musicData }">
               <v-btn absolute icon title="Play Example" @click="$emit('start-music', musicData)">
                 <v-icon>mdi-play</v-icon>
@@ -69,8 +66,12 @@ export default {
     getPlaylist() {
       return this.playlist;
     },
-    getPlaylistTracks() {
-      return this.playlist.tracks;
+    tracks: {
+      get: function () {
+        return this.playlist.tracks.items.map((m) => {
+          return m.track;
+        });
+      },
     },
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TrackList :tracks="getUserSavedTracks.items">
+    <TrackList :tracks="getUserSavedTracks.map((m) => m.track)">
       <template v-slot:btnPlay="{ musicData }">
         <v-btn absolute icon title="Play Example" @click="$emit('start-music', musicData)">
           <v-icon>mdi-play</v-icon>
@@ -42,6 +42,7 @@ export default {
   },
   created() {
     this.fetchUserSavedTracks();
+    console.log(this.tracks);
   },
 };
 </script>

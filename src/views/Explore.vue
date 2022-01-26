@@ -110,9 +110,7 @@
                   <v-card-actions>
                     <v-btn @click="like(item.track, fetchUserRecentlyPlayedTracks())" title="Like this track" x-small depressed fab><v-icon :color="item.track.is_liked ? 'pink accent-3' : 'grey'">mdi-heart</v-icon></v-btn>
                     <v-btn title="Share" x-small depressed fab><v-icon>mdi-share-variant-outline</v-icon></v-btn>
-                    <v-btn v-if="item.track.preview_url" @click="$emit('start-music', { url: item.track.preview_url, name: item.track.name, artists: item.track.artists })" title="Play Example" x-small depressed fab
-                      ><v-icon>mdi-play</v-icon></v-btn
-                    >
+                    <v-btn v-if="item.track.preview_url" @click="$emit('start-music', item.track)" title="Play Example" x-small depressed fab><v-icon>mdi-play</v-icon></v-btn>
                   </v-card-actions>
                 </div>
                 <v-avatar class="ma-3" size="125" tile>

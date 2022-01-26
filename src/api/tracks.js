@@ -7,8 +7,8 @@ export async function getTrack(trackId) {
   });
 }
 
-export async function getUserSavedTracks() {
-  return await axiosInstance({
+export function getUserSavedTracks() {
+  return axiosInstance({
     url: "/me/tracks",
     method: "GET",
     params: {
@@ -37,8 +37,8 @@ export async function removeUserSavedTracks(trackId) {
   });
 }
 
-export async function checkUserSavedTracks(trackId) {
-  return await axiosInstance({
+export function checkUserSavedTracks(trackId) {
+  return axiosInstance({
     url: "/me/tracks/contains",
     method: "GET",
     params: {

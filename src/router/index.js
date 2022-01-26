@@ -33,6 +33,14 @@ const routes = [
     path: "/tracks/:id",
     component: () => import("@/components/Tracks.vue"),
   },
+  {
+    path: "/albums/:id",
+    component: () => import("@/components/Albums.vue"),
+  },
+  {
+    path: "/artists/:id",
+    component: () => import("@/components/Artists.vue"),
+  },
 ];
 
 const router = new VueRouter({

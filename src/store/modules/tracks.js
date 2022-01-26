@@ -1,11 +1,10 @@
-import { getUserSavedTracks } from "@/api/tracks";
-import { checkUserSavedTracks } from "@/api/tracks";
+import { getUserSavedTracks, checkUserSavedTracks } from "@/api/tracks";
 import { mapPlaylistTracksId, mapPlaylistLikedTracks } from "@/utils/MapPlaylist";
 
 export default {
   namespaced: true,
   state: {
-    userSavedTracks: "",
+    userSavedTracks: [],
   },
   mutations: {
     SET_USER_SAVED_TRACKS(state, payload) {
@@ -13,8 +12,8 @@ export default {
     },
   },
   actions: {
-    async fetchUserSavedTracks({ commit }) {
-      await getUserSavedTracks()
+    fetchUserSavedTracks({ commit }) {
+      getUserSavedTracks()
         .then((v) => {
           const ids = mapPlaylistTracksId(v.data.items);
           checkUserSavedTracks(ids).then((w) => {
@@ -28,6 +27,6 @@ export default {
     },
   },
   getters: {
-    getUserSavedTracks: (state) => state.userSavedTracks,
+    getUserSavedTracks: (state) => state.userSavedTracks.items,
   },
 };
