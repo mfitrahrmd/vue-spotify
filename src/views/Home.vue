@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     loginHandler() {
-      window.location = `https://accounts.spotify.com/authorize?response_type=token&redirect_uri=https%3A%2F%2Fmfitrahrmd420.github.io%2Fvue-spotify%2Fauth&scope=user-read-private%20user-library-read%20user-library-modify%20playlist-read-private%20user-read-recently-played%20user-follow-modify%20user-read-playback-position%20user-follow-read&client_id=7f7858ab81324701ada54b47514fa0a6`;
+      window.location = `https://accounts.spotify.com/authorize?response_type=token&redirect_uri=https://fierce-temple-02414.herokuapp.com%2Fauth&scope=user-read-private%20user-library-read%20user-library-modify%20playlist-read-private%20user-read-recently-played%20user-follow-modify%20user-read-playback-position%20user-follow-read&client_id=7f7858ab81324701ada54b47514fa0a6`;
     },
   },
 };
