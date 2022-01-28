@@ -52,7 +52,6 @@ export default {
       { title: "Home", link: "/" },
       { title: "Explore", link: "/explore" },
       { title: "Collections", link: "/collections" },
-      { title: "Search", link: "/search" },
     ],
   }),
   computed: {},
