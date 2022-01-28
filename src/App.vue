@@ -5,11 +5,11 @@
 
     <v-app-bar app dark color="rgba(30, 67, 86, 1)">
       <v-app-bar-nav-icon ref="baricon" @click="drawer = true" class="d-sm-none"></v-app-bar-nav-icon>
-      <v-toolbar-title>SpoTify</v-toolbar-title>
+      <v-toolbar-title>VueSpotify</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn elevation="0" color="transparent" v-for="link in navLinks" :key="link.id" :to="link.link" class="d-none d-sm-flex mx-1">{{ link.title }}</v-btn>
       <v-spacer></v-spacer>
-      <v-btn @click="loginHandler()" light>Login</v-btn>
+      <v-btn text @click="logoutHandler()">Logout</v-btn>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer" temporary>
       <v-list nav dense>
@@ -55,18 +55,17 @@ export default {
       { title: "Search", link: "/search" },
     ],
   }),
+  computed: {},
   methods: {
     startMusic(music) {
       console.log(music);
       this.$refs["music-player"].playMusic(music);
     },
-    loginHandler() {
-      window.open(
-        `https://accounts.spotify.com/authorize?response_type=token&redirect_uri=http%3A%2F%2F192.168.235.6%3A8080%2Fauth&scope=user-read-private%20user-library-read%20user-library-modify%20playlist-read-private%20user-read-recently-played%20user-follow-modify%20user-read-playback-position%20user-follow-read&client_id=7f7858ab81324701ada54b47514fa0a6`
-      );
+    logoutHandler() {
+      localStorage.clear();
+      window.location = "/";
     },
   },
-  computed: {},
 };
 </script>
 

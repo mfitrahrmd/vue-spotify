@@ -63,7 +63,6 @@ export default {
         const id = v.data.id;
         getTrackAudioFeatures(id).then((w) => {
           v.data.audio_features = w.data;
-          console.log(v.data);
           this.track = v.data;
         });
       });

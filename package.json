@@ -1,5 +1,5 @@
 {
-  "name": "spovuetify",
+  "name": "VueSpotify",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   "dependencies": {
     "@egjs/flicking-plugins": "^4.2.2",
     "@egjs/vue-flicking": "^4.4.2",
+    "@glidejs/glide": "^3.5.2",
     "aos": "^2.3.4",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",

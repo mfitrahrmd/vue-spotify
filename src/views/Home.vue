@@ -1,7 +1,7 @@
 <template>
-  <div id="home">
+  <div>
     <v-img src="@/assets/img/gaming_setup.jpg" class="bg-img"></v-img>
-    <v-container id="home" class="whitesmoke--text pt-16" style="height: 100vh" fluid>
+    <v-container v-if="isLoggedIn" id="home" class="whitesmoke--text pt-16" style="height: 100vh" fluid>
       <v-container class="d-flex">
         <v-avatar>
           <v-img src="@/assets/logo.png"></v-img>
@@ -33,13 +33,15 @@
         </v-row>
       </v-container>
     </v-container>
+    <v-container v-else class="d-flex" style="height: 100vh">
+      <v-btn @click="loginHandler()" class="my-auto mx-auto">Login to Spotify</v-btn>
+    </v-container>
   </div>
 </template>
 
 <script>
 export default {
   name: "Home",
-  components: {},
   data: function () {
     return {
       company: "",
@@ -48,7 +50,20 @@ export default {
       },
     };
   },
-  methods: {},
+  computed: {
+    isLoggedIn() {
+      if (localStorage.getItem("access_token")) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+  methods: {
+    loginHandler() {
+      window.location = `https://accounts.spotify.com/authorize?response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fauth&scope=user-read-private%20user-library-read%20user-library-modify%20playlist-read-private%20user-read-recently-played%20user-follow-modify%20user-read-playback-position%20user-follow-read&client_id=7f7858ab81324701ada54b47514fa0a6`;
+    },
+  },
 };
 </script>
 
