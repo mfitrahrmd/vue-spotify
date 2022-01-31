@@ -1,5 +1,5 @@
 import axios from "axios";
-// import store from "@/store";
+import store from "@/store";
 
 const axiosInstance = axios.create({
   baseURL: "https://api.spotify.com/v1",
@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(function (config) {
-  config.headers.common["Authorization"] = `Bearer ${localStorage.access_token}`;
+  config.headers.common["Authorization"] = `Bearer ${store.state.auth.token.access_token}`;
   return config;
 });
 

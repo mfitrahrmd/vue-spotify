@@ -7,13 +7,13 @@
       <v-app-bar-nav-icon ref="baricon" @click="drawer = true" class="d-sm-none"></v-app-bar-nav-icon>
       <v-toolbar-title>VueSpotify</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn elevation="0" color="transparent" v-for="link in navLinks" :key="link.id" :to="link.link" class="d-none d-sm-flex mx-1">{{ link.title }}</v-btn>
+      <v-btn elevation="0" color="transparent" v-for="link in getNavLinks" :key="link.id" :to="link.link" class="d-none d-sm-flex mx-1">{{ link.title }}</v-btn>
       <v-spacer></v-spacer>
-      <v-btn text @click="logoutHandler()">Logout</v-btn>
+      <v-btn text @click="authHandler()">{{ isLoggedIn ? "Logout" : "Login" }}</v-btn>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer" temporary>
       <v-list nav dense>
-        <v-list-item-group v-for="link in navLinks" :key="link.id" v-model="group" active-class="deep-purple--text text--accent-4">
+        <v-list-item-group v-for="link in getNavLinks" :key="link.id" v-model="group" active-class="deep-purple--text text--accent-4">
           <v-list-item :to="link.link">
             <v-list-item-icon>
               <v-icon>mdi-{{ link.title.toLowerCase() }}</v-icon>
@@ -38,11 +38,10 @@
 <script>
 import MusicPlayer from "@/components/MusicPlayer";
 
+import AuthMixin from "@/mixins/AuthMixin";
+
 export default {
   name: "App",
-  components: {
-    MusicPlayer,
-  },
   data: () => ({
     //
     drawer: null,
@@ -54,15 +53,23 @@ export default {
       { title: "Collections", link: "/collections" },
     ],
   }),
-  computed: {},
+  components: {
+    MusicPlayer,
+  },
+  mixins: [AuthMixin],
+  computed: {
+    getNavLinks() {
+      return this.isLoggedIn
+        ? this.navLinks
+        : this.navLinks.filter((link) => {
+            return link.link === "/";
+          });
+    },
+  },
   methods: {
     startMusic(music) {
       console.log(music);
       this.$refs["music-player"].playMusic(music);
-    },
-    logoutHandler() {
-      localStorage.clear();
-      window.location = "/";
     },
   },
 };
