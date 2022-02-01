@@ -5,44 +5,46 @@
       <v-sheet class="mx-auto">
         <v-slide-group show-arrows>
           <v-slide-item v-for="(item, i) in getNewReleases.albums.items" :key="i" class="mx-1 mx-lg-3">
-            <v-card flat :width="$vuetify.breakpoint.smAndDown ? 100 : 200">
-              <v-menu rounded="lg" bottom right>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn style="z-index: 100000" dark absolute icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
+            <router-link :to="'/albums/' + item.id">
+              <v-card flat :width="$vuetify.breakpoint.smAndDown ? 100 : 200">
+                <v-menu rounded="lg" bottom right>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn style="z-index: 100000" dark absolute icon v-bind="attrs" v-on="on">
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
 
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title><a :href="item.external_urls.spotify" target="blank">Open in Spotify</a></v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-              <v-img :class="{ 'img-overlay': hover }" :aspect-ratio="1 / 1" :src="item.images[0].url"></v-img>
-              <v-card-text class="pa-0">
-                <h4 class="text-truncate" :title="item.name">{{ item.name }}</h4>
-                <p
-                  :title="
-                    item.artists
-                      .map((v) => {
-                        return v.name;
-                      })
-                      .join('&')
-                  "
-                  class="text-truncate"
-                >
-                  {{
-                    item.artists
-                      .map((v) => {
-                        return v.name;
-                      })
-                      .join("&")
-                  }}
-                </p>
-                <p>{{ item.album_type }}</p>
-              </v-card-text>
-            </v-card>
+                  <v-list>
+                    <v-list-item>
+                      <v-list-item-title><a :href="item.external_urls.spotify" target="blank">Open in Spotify</a></v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+                <v-img :aspect-ratio="1 / 1" :src="item.images[0].url"></v-img>
+                <v-card-text class="pa-0">
+                  <h4 class="text-truncate" :title="item.name">{{ item.name }}</h4>
+                  <p
+                    :title="
+                      item.artists
+                        .map((v) => {
+                          return v.name;
+                        })
+                        .join('&')
+                    "
+                    class="text-truncate"
+                  >
+                    {{
+                      item.artists
+                        .map((v) => {
+                          return v.name;
+                        })
+                        .join("&")
+                    }}
+                  </p>
+                  <p>{{ item.album_type }}</p>
+                </v-card-text>
+              </v-card>
+            </router-link>
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
@@ -134,15 +136,8 @@ export default {
 a {
   color: inherit !important;
 }
+
 .bg-primary {
   background: rgba(30, 67, 86, 1);
-}
-.img-overlay::after {
-  content: "";
-  position: absolute;
-  z-index: 1000;
-  width: 100%;
-  height: 100%;
-  background: rgba(25, 25, 25, 0.5);
 }
 </style>

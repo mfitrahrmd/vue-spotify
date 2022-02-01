@@ -80,11 +80,23 @@ export default {
         // map tracks id inside the playlist
         const ids = mapPlaylistTracksId(v.data.tracks.items);
         // check each tracks in playlist if liked
-        checkUserSavedTracks(ids).then((w) => {
-          mapPlaylistLikedTracks(v.data.tracks.items, w.data);
-          // update playlist data
-          this.playlist = v.data;
-        });
+        checkUserSavedTracks(ids)
+          .then((w) => {
+            if (Array.isArray(w)) {
+              return w
+                .map((m) => {
+                  return m.data;
+                })
+                .flat();
+            } else {
+              return w.data;
+            }
+          })
+          .then((w) => {
+            mapPlaylistLikedTracks(v.data.tracks.items, w);
+            // update playlist data
+            this.playlist = v.data;
+          });
       });
     },
   },

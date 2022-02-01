@@ -1,4 +1,5 @@
 import axiosInstance from "@/api";
+import axios from "axios";
 
 export async function getTrack(trackId) {
   return await axiosInstance({
@@ -38,13 +39,27 @@ export async function removeUserSavedTracks(trackId) {
 }
 
 export function checkUserSavedTracks(trackId) {
-  return axiosInstance({
-    url: "/me/tracks/contains",
-    method: "GET",
-    params: {
-      ids: trackId,
-    },
-  });
+  if (Array.isArray(trackId)) {
+    return axios.all(
+      trackId.map((m) => {
+        return axiosInstance({
+          url: "/me/tracks/contains",
+          method: "GET",
+          params: {
+            ids: m,
+          },
+        });
+      })
+    );
+  } else {
+    return axiosInstance({
+      url: "/me/tracks/contains",
+      method: "GET",
+      params: {
+        ids: trackId,
+      },
+    });
+  }
 }
 
 export async function getTrackAudioFeatures(trackId) {

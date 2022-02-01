@@ -1,33 +1,20 @@
 <template>
   <div>
     <v-img src="@/assets/img/gaming_setup.jpg" class="bg-img"></v-img>
-    <v-container v-if="isLoggedIn" id="home" class="whitesmoke--text pt-16" style="height: 100vh" fluid>
+    <v-container v-if="isLoggedIn" id="home" class="whitesmoke--text pt-16" fluid>
       <v-container class="d-flex">
         <v-avatar>
           <v-img src="@/assets/logo.png"></v-img>
         </v-avatar>
         <div class="socmed-container ms-auto">
-          <v-icon class="white--text">mdi mdi-facebook</v-icon>
-          <v-icon class="white--text">mdi mdi-instagram</v-icon>
-          <v-icon class="white--text">mdi mdi-linkedin</v-icon>
-          <v-icon class="white--text">mdi mdi-github</v-icon>
+          <a href="https://github.com/mfitrahrmd420/vue-spotify/" target="_"><v-icon class="white--text">mdi mdi-github</v-icon></a>
         </div>
       </v-container>
       <v-container class="main-content">
         <v-row>
-          <v-col cols="4" order="2" class="d-none d-lg-block mt-16">
-            <div class="text-end">
-              <div>Current location :</div>
-              <div class="text-h5">Palembang, Sukarami</div>
-              <div>In office till 4PM</div>
-            </div>
-          </v-col>
           <v-col cols="8" order="1" class="mt-16">
             <div class="">
-              <div class="text-h3 mb-6">Designing websites / apps for companies like <span>Google.|</span></div>
-              <div class="font-italic mb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed expedita error veritatis non veniam officia beatae earum molestiae! Ducimus id dicta odio eius minima quia.</div>
-              <v-btn class="text-lowercase pa-5 mb-1" color="#0d2735" rounded dark>tgcfitrah26@gmail.com</v-btn>
-              <div class="text-body-2">Available for freelance.</div>
+              <div class="text-h3 mb-6">Manage your saved <span>Playlists|</span></div>
             </div>
           </v-col>
         </v-row>
@@ -37,6 +24,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Home",
   data: function () {
@@ -48,8 +37,11 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("auth", {
+      getAccessToken: "getAccessToken",
+    }),
     isLoggedIn() {
-      return this.$store.getters.getAccessToken ? true : false;
+      return this.getAccessToken ? true : false;
     },
   },
   methods: {},
