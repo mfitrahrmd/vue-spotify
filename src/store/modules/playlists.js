@@ -21,13 +21,9 @@ export default {
         });
     },
     fetchCreatePlaylist(context, { userId, data }) {
-      createPlaylist(userId, data)
-        .then((v) => {
-          console.log(v);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      return createPlaylist(userId, data).catch((err) => {
+        console.log(err);
+      });
     },
   },
   getters: {

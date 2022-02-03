@@ -3,7 +3,7 @@
     <!-- <v-btn v-if="$vuetify.theme.dark" class="white" light icon fixed bottom right style="z-index: 999999" @click="$vuetify.theme.dark = false"><v-icon>mdi-weather-sunny</v-icon></v-btn>
     <v-btn v-else class="black" dark icon fixed bottom right style="z-index: 999999" @click="$vuetify.theme.dark = true"><v-icon>mdi-weather-night</v-icon></v-btn> -->
 
-    <v-app-bar app dark color="rgba(30, 67, 86, 1)">
+    <v-app-bar app>
       <v-app-bar-nav-icon ref="baricon" @click="drawer = true" class="d-sm-none"></v-app-bar-nav-icon>
       <v-toolbar-title>VueSpotify</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -13,11 +13,8 @@
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer" temporary>
       <v-list nav dense>
-        <v-list-item-group v-for="link in getNavLinks" :key="link.id" v-model="group" active-class="deep-purple--text text--accent-4">
+        <v-list-item-group v-for="link in getNavLinks" :key="link.id" v-model="group">
           <v-list-item :to="link.link">
-            <v-list-item-icon>
-              <v-icon>mdi-{{ link.title.toLowerCase() }}</v-icon>
-            </v-list-item-icon>
             <v-list-item-title>{{ link.title }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>

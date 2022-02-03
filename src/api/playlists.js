@@ -32,6 +32,14 @@ export async function createPlaylist(userId, data) {
   });
 }
 
+export async function changePlaylistDetails(playlistId, data) {
+  return await axiosInstance({
+    url: "/playlists/" + playlistId,
+    method: "PUT",
+    data,
+  });
+}
+
 export async function removeTrackFromPlaylist(playlistId, data) {
   return await axiosInstance({
     url: "/playlists/" + playlistId + "/tracks",

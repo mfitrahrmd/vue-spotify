@@ -16,7 +16,24 @@
             </div>
 
             <div :class="$vuetify.breakpoint.mdAndDown ? ['d-flex', 'flex-column', 'align-center', 'text-center'] : ''">
-              <v-btn fab icon absolute right small><v-icon>mdi-pencil</v-icon></v-btn>
+              <v-dialog v-model="dialog" persistent max-width="600px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn v-bind="attrs" v-on="on"> <v-icon>mdi-pencil</v-icon> </v-btn>
+                </template>
+                <v-card>
+                  <v-card-text>
+                    <v-form ref="form">
+                      <v-text-field v-model="form.playlistName" placeholder="Playlist name"></v-text-field>
+                      <v-text-field v-model="form.playlistDescription" placeholder="Playlist description"></v-text-field>
+                    </v-form>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialog = false"> Cancel </v-btn>
+                    <v-btn color="blue darken-1" text @click="dialogSubmit"> Save </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
               <div class="display-2 mx-5 text-truncate">{{ playlist.name }}</div>
 
               <div class="subtitle-1 mx-5 text-truncate">By {{ playlist.owner.display_name }}</div>
@@ -24,7 +41,7 @@
 
               <v-divider class="mx-4"></v-divider>
 
-              <v-card-text> {{ playlist.description }} </v-card-text>
+              <v-card-text v-html="playlist.description"> </v-card-text>
             </div>
           </v-card>
         </v-col>
@@ -69,7 +86,7 @@
 </template>
 
 <script>
-import { getPlaylist } from "@/api/playlists";
+import { getPlaylist, changePlaylistDetails } from "@/api/playlists";
 import { checkUserSavedTracks } from "@/api/tracks";
 
 import { mapGetters } from "vuex";
@@ -84,6 +101,11 @@ import { mapPlaylistTracksId, mapPlaylistLikedTracks } from "@/utils/MapPlaylist
 export default {
   data() {
     return {
+      dialog: false,
+      form: {
+        playlistName: "",
+        playlistDescription: "",
+      },
       playlistId: this.$route.params.id, // Get playlist id from url
       playlist: "",
       loaded: 10,
@@ -118,7 +140,6 @@ export default {
   methods: {
     async fetchPlaylist() {
       await getPlaylist(this.playlistId).then((v) => {
-        console.log(v);
         // map tracks id inside the playlist
         const ids = mapPlaylistTracksId(v.data.tracks.items);
         // check if each tracks in playlist is liked
@@ -146,6 +167,19 @@ export default {
       if (this.loaded >= this.playlist.tracks.items.length) {
         this.showBtnLoad = false;
       }
+    },
+    dialogSubmit() {
+      this.dialog = false;
+      changePlaylistDetails(this.playlistId, {
+        name: this.form.playlistName,
+        description: this.form.playlistDescription,
+      })
+        .then(() => {
+          this.fetchPlaylist();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   async created() {

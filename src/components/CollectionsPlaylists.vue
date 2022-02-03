@@ -2,7 +2,7 @@
   <div class="d-flex flex-column">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class="align-self-end mx-10" v-bind="attrs" v-on="on"> Create New Playlist </v-btn>
+        <v-btn class="align-self-end mx-5" v-bind="attrs" v-on="on"> Create New Playlist </v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -26,37 +26,44 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <div>
+      <Swiper :items="getUserPlaylists.items" :options="{ ...swiperOptions, spaceBetween: isMobile ? 10 : 25, slidesPerView: isMobile ? 2 : 5, slidesPerGroup: isMobile ? 2 : 5 }">
+        <template v-slot="{ item }">
+          <v-menu tile bottom right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn @click.prevent style="z-index: 100" absolute icon v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
 
-    <div class="mx-5" style="position: relative">
-      <swiper ref="mySwiper" :options="{ ...swiperOptions, slidesPerView: $vuetify.breakpoint.mdAndDown ? 2 : 5, slidesPerGroup: $vuetify.breakpoint.mdAndDown ? 2 : 5 }">
-        <swiper-slide v-for="(item, i) in getUserPlaylists.items" :key="i">
+            <v-list dense tile>
+              <v-list-item>
+                <a :href="item.external_urls.spotify" target="blank">Open in Spotify</a>
+              </v-list-item>
+            </v-list>
+          </v-menu>
           <router-link :to="'/playlists/' + item.id">
             <v-card>
               <v-img :aspect-ratio="1 / 1" :src="item.images.length ? item.images[0].url : 'https://dummyimage.com/300x300&text=No%20image'"></v-img>
-              <div class="text-truncate pa-5 mx-auto" style="width: 90%">
-                <v-caard-title class="title text-truncate">
-                  {{ item.name }}
-                </v-caard-title>
-                <v-card-subtitle class="text-truncate pa-0 ma-0">
-                  {{ item.description }}
-                </v-card-subtitle>
+              <div class="text-truncate mx-auto" style="width: 90%">
+                <v-card-text class="pa-0 ma-0">
+                  <div class="text-truncate title my-3">
+                    {{ item.name }}
+                  </div>
+                  <div class="text-truncate" v-html="item.description"></div>
+                </v-card-text>
               </div>
             </v-card>
           </router-link>
-        </swiper-slide>
-        <div class="swiper-scrollbar" slot="scrollbar"></div>
-      </swiper>
-      <v-btn @click="swipe('prev')" fab small absolute style="top: 50%; left: 0; transform: translate(-50%, -50%); z-index: 100"><v-icon>mdi-chevron-left</v-icon></v-btn>
-      <v-btn @click="swipe('next')" fab small absolute style="top: 50%; right: 0; transform: translate(50%, -50%); z-index: 100"><v-icon>mdi-chevron-right</v-icon></v-btn>
+        </template>
+      </Swiper>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+import Swiper from "./Swiper.vue";
 
 export default {
   data() {
@@ -76,17 +83,14 @@ export default {
       },
     };
   },
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
+  components: { Swiper },
   computed: {
     ...mapGetters({
       getUserPlaylists: "playlists/getUserPlaylists",
       getUserProfile: "users/getUserProfile",
     }),
-    swiper() {
-      return this.$refs.mySwiper.$swiper;
+    isMobile() {
+      return this.$vuetify.breakpoint.mdAndDown ? true : false;
     },
   },
   methods: {
@@ -98,18 +102,12 @@ export default {
     dialogSubmit() {
       this.$refs.form.validate();
       if (this.valid) {
-        this.fetchCreatePlaylist({ userId: this.getUserProfile.id, data: { name: this.form.playlistName } });
+        this.fetchCreatePlaylist({ userId: this.getUserProfile.id, data: { name: this.form.playlistName } }).then((v) => {
+          alert(v.data);
+          this.fetchUserPlaylists();
+        });
       }
-    },
-    swipe(direction) {
-      console.log(this.swiper);
-      if (direction == "prev") {
-        this.swiper.slidePrev(500, false);
-      } else if (direction == "next") {
-        this.swiper.slideNext(500, false);
-      } else {
-        return;
-      }
+      this.dialog = false;
     },
   },
   created() {
