@@ -21,5 +21,7 @@ export default {
         });
     },
   },
-  getters: {},
+  getters: {
+    getUserProfile: (state) => state.userProfile,
+  },
 };

@@ -9,14 +9,14 @@
               <v-card flat :width="$vuetify.breakpoint.smAndDown ? 100 : 200">
                 <v-menu rounded="lg" bottom right>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn style="z-index: 100000" dark absolute icon v-bind="attrs" v-on="on">
+                    <v-btn @click.prevent style="z-index: 100000" dark absolute icon v-bind="attrs" v-on="on">
                       <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                   </template>
 
-                  <v-list>
+                  <v-list dense>
                     <v-list-item>
-                      <v-list-item-title><a :href="item.external_urls.spotify" target="blank">Open in Spotify</a></v-list-item-title>
+                      <a :href="item.external_urls.spotify" target="blank">Open in Spotify</a>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -55,6 +55,19 @@
           <v-slide-item v-for="(item, i) in getFeaturedPlaylists.playlists.items" :key="i" class="mx-1 mx-lg-3">
             <router-link :to="'/playlists/' + item.id">
               <v-card flat :width="$vuetify.breakpoint.smAndDown ? 100 : 200">
+                <v-menu rounded="lg" bottom right>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn @click.prevent style="z-index: 100000" dark absolute icon v-bind="attrs" v-on="on">
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
+
+                  <v-list dense>
+                    <v-list-item>
+                      <a :href="item.external_urls.spotify" target="blank">Open in Spotify</a>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
                 <v-img :aspect-ratio="1 / 1" :src="item.images[0].url"></v-img>
                 <v-card-text class="pa-0">
                   <h3 class="text-truncate" :title="item.name">{{ item.name }}</h3>

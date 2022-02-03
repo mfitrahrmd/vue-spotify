@@ -5,7 +5,6 @@
         <v-tabs-slider></v-tabs-slider>
         <v-tab href="#tab-tracks"> Tracks </v-tab>
         <v-tab href="#tab-playlists"> Playlists </v-tab>
-        <v-tab href="#tab-artists"> Artists </v-tab>
       </v-tabs>
       <keep-alive>
         <v-tabs-items v-model="tab" touchless>
@@ -14,9 +13,6 @@
           </v-tab-item>
           <v-tab-item value="tab-playlists">
             <CollectionsPlaylists />
-          </v-tab-item>
-          <v-tab-item value="tab-artists">
-            <CollectionsArtists />
           </v-tab-item>
         </v-tabs-items>
       </keep-alive>
@@ -27,7 +23,6 @@
 <script>
 import CollectionsTracks from "@/components/CollectionsTracks.vue";
 import CollectionsPlaylists from "@/components/CollectionsPlaylists.vue";
-import CollectionsArtists from "@/components/CollectionsArtists.vue";
 
 export default {
   data() {
@@ -38,7 +33,6 @@ export default {
   components: {
     CollectionsTracks,
     CollectionsPlaylists,
-    CollectionsArtists,
   },
   computed: {},
   methods: {

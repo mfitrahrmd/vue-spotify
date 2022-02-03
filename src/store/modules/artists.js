@@ -11,14 +11,9 @@ export default {
     },
   },
   actions: {
-    fetchUserFollowedArtists({ commit }) {
-      getUserFollowedArtists()
-        .then((v) => {
-          commit("SET_USER_FOLLOWED_ARTISTS", v.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    async fetchUserFollowedArtists({ commit }) {
+      const data = await getUserFollowedArtists();
+      commit("SET_USER_FOLLOWED_ARTISTS", data);
     },
   },
   getters: {

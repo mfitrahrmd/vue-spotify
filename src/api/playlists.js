@@ -23,3 +23,19 @@ export async function getPlaylistTracks(playlistId) {
     method: "GET",
   });
 }
+
+export async function createPlaylist(userId, data) {
+  return await axiosInstance({
+    url: "/users/" + userId + "/playlists",
+    method: "POST",
+    data,
+  });
+}
+
+export async function removeTrackFromPlaylist(playlistId, data) {
+  return await axiosInstance({
+    url: "/playlists/" + playlistId + "/tracks",
+    method: "DELETE",
+    data,
+  });
+}

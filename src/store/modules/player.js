@@ -15,10 +15,18 @@ export default {
       await getUserRecentlyPlayedTracks()
         .then((v) => {
           const ids = mapPlaylistTracksId(v.data.items);
-          checkUserSavedTracks(ids).then((w) => {
-            mapPlaylistLikedTracks(v.data.items, w.data);
-            commit("SET_USER_RECENTLY_PLAYED_TRACKS", v.data);
-          });
+          checkUserSavedTracks(ids)
+            .then((w) => {
+              return w
+                .map((m) => {
+                  return m.data;
+                })
+                .flat();
+            })
+            .then((w) => {
+              mapPlaylistLikedTracks(v.data.items, w);
+              commit("SET_USER_RECENTLY_PLAYED_TRACKS", v.data);
+            });
         })
         .catch((err) => {
           console.log(err);

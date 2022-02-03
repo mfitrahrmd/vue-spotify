@@ -1,3 +1,4 @@
+// Split array into multiple array with length 50
 const chunk = function (arr) {
   let result = [];
 
@@ -7,18 +8,16 @@ const chunk = function (arr) {
   return result;
 };
 
+// --- Export --- //
+
 export function mapPlaylistTracksId(v) {
   const arr = v.map((m) => {
     return m.track.id;
   });
 
-  if (arr.length <= 50) {
-    return arr.join(",");
-  } else {
-    return chunk(arr).map((m) => {
-      return m.join(",");
-    });
-  }
+  return chunk(arr).map((m) => {
+    return m.join(",");
+  });
 }
 
 export function mapPlaylistLikedTracks(v, w) {

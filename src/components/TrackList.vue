@@ -19,29 +19,26 @@
               </v-avatar>
             </td>
             <td>
-              <v-hover v-slot="{ hover }">
-                <router-link style="color: inherit" :to="'/tracks/' + item.id">
-                  <p class="d-inline" :class="{ 'text-decoration-underline': hover }">{{ item.name }}</p>
-                </router-link>
-              </v-hover>
+              <router-link style="color: inherit" :to="'/tracks/' + item.id">
+                <p class="d-inline">{{ item.name }}</p>
+              </router-link>
               <v-spacer></v-spacer>
-              <v-hover v-slot="{ hover }" v-for="artist in item.artists" :key="artist.id">
-                <router-link style="color: inherit" :to="'/artists/' + artist.id">
-                  <p class="d-inline font-weight-medium" :class="{ 'text-decoration-underline': hover }">
-                    {{ artist.name }}
-                  </p>
-                </router-link>
-              </v-hover>
+              <router-link v-for="artist in item.artists" :key="artist.id" style="color: inherit" :to="'/artists/' + artist.id">
+                <p class="d-inline font-weight-medium">
+                  {{ artist.name }}
+                </p>
+              </router-link>
             </td>
             <td v-if="item.album && !$vuetify.breakpoint.mdAndDown">
-              <v-hover v-slot="{ hover }">
-                <router-link style="color: inherit" :to="'/albums/' + item.album.id">
-                  <p class="d-inline" :class="{ 'text-decoration-underline': hover }">{{ item.album.name }}</p>
-                </router-link>
-              </v-hover>
+              <router-link style="color: inherit" :to="'/albums/' + item.album.id">
+                <p class="d-inline">{{ item.album.name }}</p>
+              </router-link>
             </td>
             <td class="text-end">
-              <slot name="btnLike" :musicData="item"></slot>
+              <div class="d-flex justify-center">
+                <slot name="btnLike" :musicData="item"></slot>
+                <slot name="btnMenu" :musicData="item"></slot>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -73,6 +70,10 @@ export default {
 </script>
 
 <style scoped>
+p:hover {
+  text-decoration: underline;
+}
+
 .slide-up-enter {
   transform: translateY(20px);
   opacity: 0;

@@ -2,14 +2,14 @@ import { addUserSavedTracks, removeUserSavedTracks } from "@/api/tracks";
 
 export default {
   methods: {
-    like: function (p, callback) {
+    like: function (musicData, callback) {
       // check if the track is liked or not
-      if (p.is_liked) {
-        removeUserSavedTracks(p.id).then(() => {
+      if (musicData.is_liked) {
+        removeUserSavedTracks(musicData.id).then(() => {
           callback();
         });
       } else {
-        addUserSavedTracks(p.id).then(() => {
+        addUserSavedTracks(musicData.id).then(() => {
           callback();
         });
       }
